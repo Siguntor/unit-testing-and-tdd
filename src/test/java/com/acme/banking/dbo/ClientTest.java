@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,4 +50,52 @@ public class ClientTest {
         //also take a look at `extracting()` https://stackoverflow.com/a/51812188
         //endregion
     }
+
+    @Test
+    public void shouldNotCreateClientWhenIdZero () {
+        assertThrows(
+          IllegalArgumentException.class,
+                () -> new Client(0, "test name")
+        );
+    }
+
+    @Test
+    public void shouldNotCreateClientWhenIdNegative () {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(-1, "test name")
+        );
+    }
+
+    @Test
+    public void shouldCreateClientWhenIdCorrect () {
+        assertDoesNotThrow(
+                () -> new Client(1, "test name")
+        );
+    }
+
+    @Test
+    public void shouldNotCreateClientWhenNameNull () {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(1, null)
+        );
+    }
+
+    @Test
+    public void shouldNotCreateClientWhenNameEmpty () {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Client(1, "")
+        );
+    }
+
+    @Test
+    public void shouldCreateClientWhenNameCorrect () {
+        assertDoesNotThrow(
+                () -> new Client(1, "Name_1")
+        );
+    }
+
+
 }
